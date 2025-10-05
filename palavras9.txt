@@ -1,0 +1,6 @@
+estrela Corpo celeste que emite luz própria
+planeta Corpo celeste que orbita uma estrela
+cometa Corpo celeste que possui uma cauda de gases e poeira
+asteroide Pequeno corpo rochoso que orbita o Sol
+galaxia Conjunto gigantesco de estrelas, planetas e poeira cósmica
+

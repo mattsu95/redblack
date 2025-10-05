@@ -1,0 +1,15 @@
+mesa Móvel usado para apoiar objetos
+cadeira Assento com encosto para sentar
+sofá Móvel estofado usado para sentar
+cama Móvel usado para dormir
+armario Móvel usado para guardar objetos
+prateleira Estrutura horizontal para apoio de objetos
+celular Dispositivo portátil de comunicação
+televisao Aparelho eletrônico que transmite imagens e sons
+computador Dispositivo eletrônico para processar dados
+lampada Objeto que emite luz artificial
+relógio Instrumento para medir o tempo
+garrafa Recipiente para armazenar líquidos
+mochila Bolsa usada para carregar objetos nas costas
+caneta Instrumento para escrever com tinta
+

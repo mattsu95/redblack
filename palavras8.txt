@@ -1,0 +1,24 @@
+musica Arte baseada em sons organizados
+pintura Arte de representar imagens com tinta
+escultura Arte de modelar formas em materiais
+danca Arte de se expressar com movimentos
+teatro Arte de representar histórias no palco
+cinema Arte de contar histórias com imagens em movimento
+literatura Arte de escrever obras artísticas
+poesia Forma literária baseada em versos
+romance Gênero literário de narrativa longa
+conto Narrativa literária curta
+drama Gênero literário ou teatral
+comedia Gênero que busca provocar riso
+tragedia Gênero que mostra situações graves
+fotografia Arte de capturar imagens com câmera
+desenho Representação gráfica feita à mão
+grafite Arte urbana feita em paredes
+arquitetura Arte de projetar construções
+escenario Espaço onde se realiza uma apresentação
+palco Estrutura elevada para apresentações
+ator Pessoa que interpreta personagem
+atriz Pessoa que interpreta personagem feminina
+diretor Responsável pela orientação artística
+roteiro Documento com a narrativa de uma obra
+

@@ -1,0 +1,29 @@
+rio Curso natural de água doce
+lago Grande acumulação de água em depressão natural
+oceano Grande massa de água salgada
+ilha Porção de terra cercada por água
+continente Grande porção contínua de terra emersas
+montanha Elevação natural de grande altitude
+planicie Região plana e extensa
+deserto Região árida com escassa vegetação
+floresta Área extensa coberta por árvores
+cachoeira Queda natural de água
+vulcao Montanha que expele lava e gases
+glaciar Grande massa de gelo em movimento
+vale Região baixa entre montanhas
+peninsula Porção de terra cercada por água em quase todos os lados
+banana Fruta amarela rica em potássio
+maca Fruta doce, vermelha ou verde, crocante
+pera Fruta doce e macia em formato arredondado
+uva Fruta pequena usada em vinhos e sucos
+abacaxi Fruta tropical com casca espinhosa
+laranja Fruta cítrica rica em vitamina C
+manga Fruta tropical suculenta de sabor doce
+melancia Grande fruta de polpa vermelha e sementes pretas
+morango Fruta pequena, vermelha e saborosa
+kiwi Fruta de casca marrom e polpa verde
+coco Fruta tropical com água e polpa branca
+goiaba Fruta tropical de polpa rosada ou branca
+pessego Fruta de casca aveludada e sabor doce
+ameixa Fruta pequena de polpa suculenta
+

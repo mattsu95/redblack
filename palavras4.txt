@@ -1,0 +1,14 @@
+algoritmo Sequência de passos para resolver um problema
+programacao Ato de escrever instruções para computadores
+computador Máquina capaz de processar informações automaticamente
+processador Unidade central de processamento de um computador
+memoria Dispositivo que armazena dados temporária ou permanentemente
+disco Unidade de armazenamento magnético ou eletrônico
+rede Conjunto de computadores interligados para troca de dados
+internet Rede mundial de computadores que conecta bilhões de usuários
+servidor Computador que fornece serviços ou dados a outros
+cliente Computador ou programa que consome serviços de um servidor
+hardware Conjunto de partes físicas de um computador
+software Conjunto de programas que controlam o hardware
+sistema Operação integrada de software e hardware
+

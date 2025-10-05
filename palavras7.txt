@@ -1,0 +1,25 @@
+carro Veículo automotor de quatro rodas
+moto Veículo automotor de duas rodas
+bicicleta Veículo de duas rodas movido a pedal
+onibus Veículo coletivo de transporte urbano
+aviao Aeronave capaz de voar
+barco Embarcação usada em rios ou mares
+navio Grande embarcação usada no mar
+trem Veículo ferroviário de transporte
+metro Sistema de transporte ferroviário subterrâneo
+taxi Veículo de transporte individual pago
+uber Serviço de transporte por aplicativo
+mercado Local para comprar e vender produtos
+loja Estabelecimento comercial
+banco Instituição financeira
+hospital Estabelecimento de cuidados médicos
+escola Instituição de ensino
+universidade Instituição de ensino superior
+igreja Local de culto religioso
+cinema Local para exibição de filmes
+teatro Local de apresentações artísticas
+restaurante Local para refeições
+padaria Estabelecimento que vende pães
+farmacia Estabelecimento que vende medicamentos
+livraria Loja especializada em livros
+

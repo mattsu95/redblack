@@ -1,0 +1,26 @@
+abacaxi Fruta tropical com casca espinhosa
+morango Fruta vermelha pequena e doce
+manga Fruta tropical suculenta de sabor doce
+pera Fruta doce em formato arredondado
+goiaba Fruta tropical de polpa rosada
+pessego Fruta de casca aveludada
+ameixa Fruta pequena e suculenta
+cavalo Animal usado para transporte
+zebra Animal africano com listras
+urso Mamífero onívoro de regiões frias
+panda Urso originário da China
+macaco Primata ágil e inteligente
+papagaio Ave conhecida por imitar sons
+cobra Réptil alongado e sem membros
+cama Móvel usado para dormir
+armario Móvel usado para guardar roupas
+sofa Móvel estofado usado para sentar
+prateleira Estrutura para apoiar objetos
+caneta Instrumento para escrever
+lapis Instrumento para escrever de grafite
+borracha Objeto usado para apagar escritos
+mochila Bolsa usada para carregar objetos
+sapato Calçado usado para proteger os pés
+oculos Acessório usado para corrigir a visão
+fone Acessório usado para ouvir sons
+

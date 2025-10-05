@@ -1,0 +1,6 @@
+violino Instrumento musical de cordas friccionadas
+flauta Instrumento musical de sopro
+trompete Instrumento musical de sopro metálico
+bateria Conjunto de instrumentos de percussão
+harpa Instrumento musical de cordas dedilhadas
+
