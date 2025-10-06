@@ -18,11 +18,16 @@ public:
     Dictionary(){root = NULL;}
 
     Node* Insert(const string &w, const string &m, Node *n) {
-        if(!n) //node == NULL
-            return new Node(w, m); //n sei se ta certo isso
+        if(!n) {//node == NULL
+            Node *aux = new Node(w, m);
+            //return new Node(w, m); //n sei se ta certo isso
+            aux->color = false; //leaf node always black
+            return aux; //faz sentido?
+        }
 
-        if(w > n->word) 
+        if(w > n->word) {
             n->right = Insert(w, m, n->right);
+        }
         else if(w < n->word) 
             n->left = Insert(w, m, n->right);
         else
