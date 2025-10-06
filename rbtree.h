@@ -12,6 +12,21 @@ struct Node {
 };
 
 class Dictionary {
-private:
+public:
 
+    Node *root;
+    Dictionary(){root = NULL;}
+
+    Node* Insert(const string &w, const string &m, Node *n) {
+        if(!n) //node == NULL
+            return new Node(w, m); //n sei se ta certo isso
+
+        if(w > n->word) 
+            n->right = Insert(w, m, n->right);
+        else if(w < n->word) 
+            n->left = Insert(w, m, n->right);
+        else
+            return n;  
+        
+    }
 };
