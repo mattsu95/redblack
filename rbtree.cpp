@@ -19,14 +19,59 @@ public:
 
     Node *root;
     Dictionary(){root = NULL;}
+
     void Insert(const string &w, const string &m) {
         Node* z = new Node(w, m);
         Node* n = Insertrb(z);
         
-        //InsertFixup(n);                           
-        root->color = black;
+        InsertFixup(n);                           
+        if(root) root->color = black;
     }
 
+    Node* rLeft(Node* x) { 
+		Node* y = x->right;
+		Node *w = y->left;
+		
+		y->left = x;
+        y->parent = x->parent;
+
+        if(y->parent) {
+            if(y->parent->left == x) y->parent->left = y;
+            else y->parent->right = y;
+        }
+        else { //parent == nullptr
+            root = y;
+        }
+
+        x->parent = y;
+		x->right = w;
+        if(w) w->parent = x;
+		
+		return y;
+	}
+
+    Node* rRight(Node* x) {
+		Node* y = x->left;
+		Node *w = y->right;
+		
+		y->right = x;
+        y->parent = x->parent;
+
+        if(y->parent) {
+            if(y->parent->left == x) y->parent->left = y;
+            else y->parent->right = y;
+        }
+        else { //parent == nullptr
+            root = y;
+        }
+
+        x->parent = y;
+		x->left = w;
+        if(w) w->parent = x;
+		
+		return y;
+	}
+    
 private:
     Node* Insertrb(Node *z) {
         Node* x = root;         //não teve jeito, tive que fazer isso
@@ -54,23 +99,50 @@ private:
         Node* g = y->parent;      //g de godfather
         Node* uncle = nullptr;
         
-        if(!y || g) return; //se for a raiz ou um filho direto da raiz ta tudo certo, pq aparentemente a regra de nó folha ser sempre preto serve pra nada
-
+        if(!y || !g) return; //se for a raiz ou um filho>righteto da raiz ta tudo certo
         while(y && y->color) {
+            if(!g) break;
+
             uncle = (g->left == y)? g->right: g->left;
-            if(uncle && uncle->color) { //1st case - z's uncle red
+
+            //case 1 - z's uncle red
+            if(uncle && uncle->color) { 
                 uncle->color = black;   //o tio e o pai pegam a negritude do avô
                 y->color = black;
                 g->color = red;
             }
 
+            else{
+                //case 2.1 - z is an inner left child (right-left)
+                if(z == y->left && y == g->right) {
+                    y = rRight(y); //single rotation right
+                    z = y->right;
+                } //proceed to case 3.1
 
-            //aqui, implementar o resto dos casos
+                //case 2.2 - z is an inner right child (left-right)
+                if(z == y->right && y == g->left) {
+                    y = rLeft(y); //single rotation left
+                    z = y->left;
+                } //proceed to case 3.2
 
+                //case 3.1 - z is an outer right child (right-right)
+                if(z == y->right && y == g->right) {
+                    y->color = black;
+                    g->color = red;
+                    y = rLeft(g); //single rotation left
+                }
 
+                //case 3.2 - z is an outer left child (left-left)
+                else if(z == y->left && y == g->left) {
+                    y->color = black;
+                    g->color = red;
+                    y = rRight(g); //single rotation right
+                }
+            }
+            
             z = y->parent;
             y = z->parent;
-            g = y->parent;
+            g = (y? y->parent: nullptr); //evitar operação com nullptr
         }
         
     }
