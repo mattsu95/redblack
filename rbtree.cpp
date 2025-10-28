@@ -147,3 +147,58 @@ private:
         
     }
 };
+
+void inserirPalavra(){
+    return;
+}
+void buscarPalavra(){
+    return;
+}
+void listarPalavras(){
+    return;
+}
+void excluirPalavra(){
+    return;
+}
+void salvarEmArquivo(){
+    return;
+}
+int main() {
+    int opcao;
+
+    do {
+        cout << "\n========== DICIONÁRIO DIGITAL ==========\n";
+        cout << "1. Inserir nova palavra\n";
+        cout << "2. Buscar palavra\n";
+        cout << "3. Listar todas as palavras (ordem alfabética)\n";
+        cout << "4. Excluir palavra\n";
+        cout << "5. Salvar e sair\n";
+        cout << "========================================\n";
+        cout << "Selecione uma opção: ";
+        cin >> opcao;
+        cin.ignore(); // limpar buffer
+
+        switch (opcao) {
+            case 1:
+                inserirPalavra();
+                break;
+            case 2:
+                buscarPalavra();
+                break;
+            case 3:
+                listarPalavras();
+                break;
+            case 4:
+                excluirPalavra();
+                break;
+            case 5:
+                salvarEmArquivo();
+                cout << "\nEncerrando o programa e salvando alterações...\n";
+                break;
+            default:
+                cout << "\nOpção inválida. Tente novamente.\n";
+        }
+    } while (opcao != 5);
+
+    return 0;
+}
