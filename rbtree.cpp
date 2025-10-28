@@ -24,11 +24,17 @@ public:
         Node* z = new Node(w, m);
         Node* n = Insertrb(z);
         
+        if(n != z) {
+            delete z;
+            return;
+        }
+        
         InsertFixup(n);                           
         if(root) root->color = black;
     }
 
     Node* rLeft(Node* x) { 
+        if(!x || !x->right) return x;
 		Node* y = x->right;
 		Node *w = y->left;
 		
@@ -51,6 +57,7 @@ public:
 	}
 
     Node* rRight(Node* x) {
+        if(!x || !x->left) return x;
 		Node* y = x->left;
 		Node *w = y->right;
 		
@@ -82,7 +89,6 @@ private:
             if(z->word < x->word) x = x->left;
             else if(z->word > x->word) x = x->right;
             else {
-                delete z;
                 return x;
             }
         }
@@ -95,138 +101,172 @@ private:
     }
 
     void InsertFixup(Node* z) {
-        Node* y = z->parent;
-        Node* g = y->parent;      //g de godfather
-        Node* uncle = nullptr;
-        
-        if(!y || !g) return; //se for a raiz ou um filho>righteto da raiz ta tudo certo
-        while(y && y->color) {
-            if(!g) break;
-
-            uncle = (g->left == y)? g->right: g->left;
-
-            //case 1 - z's uncle red
-            if(uncle && uncle->color) { 
-                uncle->color = black;   //o tio e o pai pegam a negritude do avô
+        while(z->parent && z->parent->color == red) {
+            Node* y = z->parent;
+            Node* g = y->parent;
+            if(!g) { // y == root
+                y->color = black;
+                break;
+            }
+    
+            Node* uncle = (y == g->left) ? g->right : g->left;
+    
+            // case 1: z's uncle is red
+            if(uncle && uncle->color == red) {
+                uncle->color = black;
                 y->color = black;
                 g->color = red;
-            }
-
-            else{
-                //case 2.1 - z is an inner left child (right-left)
-                if(z == y->left && y == g->right) {
-                    y = rRight(y); //single rotation right
-                    z = y->right;
-                } //proceed to case 3.1
-
-                //case 2.2 - z is an inner right child (left-right)
-                if(z == y->right && y == g->left) {
-                    y = rLeft(y); //single rotation left
-                    z = y->left;
-                } //proceed to case 3.2
-
-                //case 3.1 - z is an outer right child (right-right)
-                if(z == y->right && y == g->right) {
-                    y->color = black;
-                    g->color = red;
-                    y = rLeft(g); //single rotation left
+                z = g;
+            } 
+            else {
+                if(y == g->left) {
+                    //case 2 (inner): z é filho direito -> rotaciona pai pra left
+                    if(z == y->right) {
+                        z = y;        // z passa a apontar para o pai
+                        rLeft(z);     // left-rotate(p)
+                        y = z->parent;
+                        g = y ? y->parent : nullptr;
+                    }
+                    // case 3 (outer): agora z é left-left
+                    y = z->parent;
+                    g = y ? y->parent : nullptr;
+                    if (y) y->color = black;
+                    if (g) {
+                        g->color = red;
+                        rRight(g);   // rotate right at grandparent
+                    }
+                    z = y ? y : z;
                 }
-
-                //case 3.2 - z is an outer left child (left-left)
-                else if(z == y->left && y == g->left) {
-                    y->color = black;
-                    g->color = red;
-                    y = rRight(g); //single rotation right
+                
+                // caso simétrico: pai é filho direito do avô
+                else {
+                    if(z == y->left) {
+                        z = y;
+                        rRight(z);    // right-rotate(p)
+                        y = z->parent;
+                        g = y ? y->parent : nullptr;
+                    }
+                    
+                    y = z->parent;
+                    g = y ? y->parent : nullptr;
+                    
+                    if (y) y->color = black;
+                    if (g) {
+                        g->color = red;
+                        rLeft(g);    // rotate left at grandparent
+                    }
+                    z = y ? y : z;
                 }
             }
-            
-            z = y->parent;
-            y = z->parent;
-            g = (y? y->parent: nullptr); //evitar operação com nullptr
         }
-        
+    
+        if (root) root->color = black;
     }
+
 };
+
+// ---- Funções do menu para teste ----
+Dictionary dict;
+
+void inserirPalavra(){
+    string w, m;
+    cout << "Palavra: ";
+    getline(cin, w);
+    if (w.empty()) {
+        cout << "Palavra vazia. Abortando.\n";
+        return;
+    }
+    cout << "Significado (uma linha): ";
+    getline(cin, m);
+    dict.Insert(w, m);
+    cout << "Inserido: " << w << "\n";
+}
+
+void inorderPrint(Node* node) {
+    if (!node) return;
+    inorderPrint(node->left);
+    cout << (node->color == red ? "(R) " : "(B) ") << node->word << " : " << node->meaning << "\n";
+    inorderPrint(node->right);
+}
+
+void listarPalavras(){
+    if (!dict.root) {
+        cout << "Dicionario vazio.\n";
+        return;
+    }
+    inorderPrint(dict.root);
+}
+
+void buscarPalavra(){
+    string w;
+    cout << "Palavra a buscar: ";
+    getline(cin, w);
+    Node* cur = dict.root;
+    while (cur) {
+        if (w == cur->word) {
+            cout << cur->word << " : " << cur->meaning << "\n";
+            return;
+        } else if (w < cur->word) cur = cur->left;
+        else cur = cur->right;
+    }
+    cout << "Palavra nao encontrada.\n";
+}
+
+void excluirPalavra(){
+    cout << "Funcao de exclusao nao implementada ainda.\n";
+}
+
+void salvarEmArquivo(){
+    cout << "Funcao de salvar nao implementada (teste local somente).\n";
+}
 
 
 void carregarDeArquivo(Dictionary &dict) {
     string linha, palavra, significado;
-
+    int linhasLidas = 0;
+    
     // O loop continua enquanto houver linhas para ler da entrada padrão (cin)
     while (getline(cin, linha)) {
-     
+        linhasLidas++;
 
         // Encontra a posição do primeiro espaço na linha
         size_t pos = linha.find(' ');
 
-
         if (pos == string::npos) { 
-            // Se não houver espaço
+            // Se não houver espaço, a palavra é a linha inteira, significado vazio
             palavra = linha;
-            significado = ""; // significado fica vazio
+            significado = "";
         } else {
             // palavra posição 0 até a posição do espaço
             palavra = linha.substr(0, pos);
 
-            // posição depis do espaço até o final da linha
+            // Posição depis do espaço até o final da linha
             significado = linha.substr(pos + 1);
         }
 
-        //sem palavras cagadas
+        //sem palavras vazias
         if (palavra.empty()) {
             continue;
         }
 
-        cout << "Lido do arquivo -> chave = " << palavra << ", significado = " << significado << endl;
-
-        // Adiciona a palavra e o significado
-        //dict.Insert(palavra, significado);
+        dict.Insert(palavra, significado);
     }
 
+    
+    // 1. Limpa o estado de falha (EOF) do cin
     cin.clear();
-    cin.ignore();
-}
-
-
-void inserirPalavra(Dictionary &dict) { // Recebe o dict por referencia
-    string palavra, significado;
-
-    cout << "\nDigite a nova palavra: ";
-    getline(cin, palavra);
-
-    cout << "Digite o significado da palavra: ";
-    getline(cin, significado);
-
-    if (palavra.empty()) {
-        cout << "\nA palavra não pode estar vazia. Operação cancelada.\n";
-        return;
-    }
-
-    dict.Insert(palavra, significado);
-
-    cout << "\nPalavra '" << palavra << "' inserida com sucesso!\n";
-}
-
-void buscarPalavra(){
-    return;
-}
-void listarPalavras(){
-    return;
-}
-void excluirPalavra(){
-    return;
-}
-void salvarEmArquivo(){
-    return;
+    cin.ignore(); // limpar buffer
+    
+    cout << "Carregamento finalizado. " << linhasLidas << " linhas processadas.\n";
 }
 
 int main() {
-    Dictionary dict; 
     int opcao;
 
     cout << "Tentando carregar dados do arquivo...\n";
     carregarDeArquivo(dict);
-    cout << "Carregamento finalizado. Iniciando modo interativo.\n";
+
+    cin.clear();
 
     do {
         cout << "\n========== DICIONÁRIO DIGITAL ==========\n\n";
@@ -237,12 +277,13 @@ int main() {
         cout << "5. Salvar e sair\n\n";
         cout << "========================================\n";
         cout << "Selecione uma opção: ";
-        cin >> opcao;
-        cin.ignore(); // tirar /n do buffer
+
+        if (!(cin >> opcao)) break;
+        cin.ignore(); // limpar buffer
 
         switch (opcao) {
             case 1:
-                inserirPalavra(dict); 
+                inserirPalavra();
                 break;
             case 2:
                 buscarPalavra();
