@@ -103,7 +103,7 @@ private:
     void InsertFixup(Node* z) {
         while(z->parent && z->parent->color == red) {
             Node* y = z->parent;
-            Node* g = y->parent;
+            Node* g = y->parent;    //g de godfather
             if(!g) { // y == root
                 y->color = black;
                 break;
@@ -112,55 +112,61 @@ private:
             Node* uncle = (y == g->left) ? g->right : g->left;
     
             // case 1: z's uncle is red
-            if(uncle && uncle->color == red) {
-                uncle->color = black;
+            if(uncle && uncle->color) {
+                uncle->color = black;   //o tio e o pai pegam a negritude do avô
                 y->color = black;
                 g->color = red;
                 z = g;
             } 
             else {
                 if(y == g->left) {
-                    //case 2 (inner): z é filho direito -> rotaciona pai pra left
+                    
+                    //case 2.1: z is an inner right child (left-right)
                     if(z == y->right) {
-                        z = y;        // z passa a apontar para o pai
-                        rLeft(z);     // left-rotate(p)
+                        z = y;
+                        rLeft(z);     //single rotation left (do pai do nó atual)
                         y = z->parent;
                         g = y ? y->parent : nullptr;
-                    }
-                    // case 3 (outer): agora z é left-left
+                    } //segue pro caso 3.1
+                    
+                    //case 3.1: z is an outer left child (left-left)
                     y = z->parent;
                     g = y ? y->parent : nullptr;
-                    if (y) y->color = black;
-                    if (g) {
+                    
+                    //troca as cores do pai e do vô
+                    if(y) y->color = black;
+                    if(g) {
                         g->color = red;
-                        rRight(g);   // rotate right at grandparent
+                        rRight(g);   //single rotation right (do vô do nó atual)
                     }
                     z = y ? y : z;
                 }
+                else { //y == g->right
                 
-                // caso simétrico: pai é filho direito do avô
-                else {
+                    //case 2.2: z is an inner left child (right-left)
                     if(z == y->left) {
                         z = y;
-                        rRight(z);    // right-rotate(p)
+                        rRight(z);    //single rotation right
                         y = z->parent;
                         g = y ? y->parent : nullptr;
-                    }
+                    } //segue pro caso 3.2
                     
+                    
+                    //case 3.2: z is an outer left child (left-left)
                     y = z->parent;
                     g = y ? y->parent : nullptr;
                     
-                    if (y) y->color = black;
-                    if (g) {
+                    if(y) y->color = black;
+                    if(g) {
                         g->color = red;
-                        rLeft(g);    // rotate left at grandparent
+                        rLeft(g);    //single rotation left
                     }
                     z = y ? y : z;
                 }
             }
         }
     
-        if (root) root->color = black;
+        if(root) root->color = black;
     }
 
 };
