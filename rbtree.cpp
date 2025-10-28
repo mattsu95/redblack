@@ -148,9 +148,65 @@ private:
     }
 };
 
-void inserirPalavra(){
-    return;
+
+void carregarDeArquivo(Dictionary &dict) {
+    string linha, palavra, significado;
+
+    // O loop continua enquanto houver linhas para ler da entrada padrão (cin)
+    while (getline(cin, linha)) {
+     
+
+        // Encontra a posição do primeiro espaço na linha
+        size_t pos = linha.find(' ');
+
+
+        if (pos == string::npos) { 
+            // Se não houver espaço
+            palavra = linha;
+            significado = ""; // significado fica vazio
+        } else {
+            // palavra posição 0 até a posição do espaço
+            palavra = linha.substr(0, pos);
+
+            // posição depis do espaço até o final da linha
+            significado = linha.substr(pos + 1);
+        }
+
+        //sem palavras cagadas
+        if (palavra.empty()) {
+            continue;
+        }
+
+        cout << "Lido do arquivo -> chave = " << palavra << ", significado = " << significado << endl;
+
+        // Adiciona a palavra e o significado
+        //dict.Insert(palavra, significado);
+    }
+
+    cin.clear();
+    cin.ignore();
 }
+
+
+void inserirPalavra(Dictionary &dict) { // Recebe o dict por referencia
+    string palavra, significado;
+
+    cout << "\nDigite a nova palavra: ";
+    getline(cin, palavra);
+
+    cout << "Digite o significado da palavra: ";
+    getline(cin, significado);
+
+    if (palavra.empty()) {
+        cout << "\nA palavra não pode estar vazia. Operação cancelada.\n";
+        return;
+    }
+
+    dict.Insert(palavra, significado);
+
+    cout << "\nPalavra '" << palavra << "' inserida com sucesso!\n";
+}
+
 void buscarPalavra(){
     return;
 }
@@ -163,24 +219,30 @@ void excluirPalavra(){
 void salvarEmArquivo(){
     return;
 }
+
 int main() {
+    Dictionary dict; 
     int opcao;
 
+    cout << "Tentando carregar dados do arquivo...\n";
+    carregarDeArquivo(dict);
+    cout << "Carregamento finalizado. Iniciando modo interativo.\n";
+
     do {
-        cout << "\n========== DICIONÁRIO DIGITAL ==========\n";
+        cout << "\n========== DICIONÁRIO DIGITAL ==========\n\n";
         cout << "1. Inserir nova palavra\n";
         cout << "2. Buscar palavra\n";
         cout << "3. Listar todas as palavras (ordem alfabética)\n";
         cout << "4. Excluir palavra\n";
-        cout << "5. Salvar e sair\n";
+        cout << "5. Salvar e sair\n\n";
         cout << "========================================\n";
         cout << "Selecione uma opção: ";
         cin >> opcao;
-        cin.ignore(); // limpar buffer
+        cin.ignore(); // tirar /n do buffer
 
         switch (opcao) {
             case 1:
-                inserirPalavra();
+                inserirPalavra(dict); 
                 break;
             case 2:
                 buscarPalavra();
