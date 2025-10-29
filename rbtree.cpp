@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -222,8 +223,34 @@ void excluirPalavra(){
     cout << "Funcao de exclusao nao implementada ainda.\n";
 }
 
-void salvarEmArquivo(){
-    cout << "Funcao de salvar nao implementada (teste local somente).\n";
+void inorderSave(Node* node, ofstream& arquivo) {
+    if (!node) return;
+    inorderSave(node->left, arquivo);
+    // Escreve a palavra, um espaço, e o significado, seguido de uma nova linha.
+    arquivo << node->word << " " << node->meaning << endl;
+    inorderSave(node->right, arquivo);
+}
+
+
+void salvarEmArquivo() {
+    string nomeDoArquivo = "teste.out";
+
+    ofstream arquivo(nomeDoArquivo);
+
+    if (!arquivo.is_open()) {
+        cout << "ERRO: Nao foi possivel abrir ou criar o arquivo '" << nomeDoArquivo << "'.\n";
+        return; 
+    }
+
+    cout << "\nSalvando dicionario em '" << nomeDoArquivo << "'...\n";
+
+    if (dict.root) {
+        inorderSave(dict.root, arquivo);
+    }
+
+    arquivo.close();
+
+    cout << "Dicionario salvo com sucesso!\n";
 }
 
 
@@ -272,8 +299,6 @@ int main() {
     cout << "Tentando carregar dados do arquivo...\n";
     carregarDeArquivo(dict);
     
-    listarPalavras();
-
     cin.clear();
 
     do {
