@@ -261,7 +261,7 @@ void carregarDeArquivo(Dictionary &dict) {
     
     // 1. Limpa o estado de falha (EOF) do cin
     cin.clear();
-    cin.ignore(); // limpar buffer
+    freopen("/dev/tty", "r", stdin);
     
     cout << "Carregamento finalizado. " << linhasLidas << " linhas processadas.\n";
 }
@@ -271,6 +271,8 @@ int main() {
 
     cout << "Tentando carregar dados do arquivo...\n";
     carregarDeArquivo(dict);
+    
+    listarPalavras();
 
     cin.clear();
 
