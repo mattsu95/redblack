@@ -51,21 +51,49 @@ public:
 
     void Remove(const string &word)
     {
-        Node* z = buscarPalavra(word);
+        Node *z = buscarPalavra(word);
         if(!z) return;
 
-        Node* y = z;
+        Node *y = z;
         bool true_color = y->color;
 
-        Node* x = nullptr;        //nó que determina o fixup necessário
-        Node* x_parent = nullptr; //pra não ter q ficar testando sempre se x é nulo
+        Node *x = nullptr;        //nó que determina o fixup necessário
+        Node *x_parent = nullptr; //pra não ter q ficar testando sempre se x é nulo
 
-        if(!z->left) {
+        if(!z->left) { //tem 0 ou 1 filhos
             x = z->right;
             x_parent = z->parent;
             replace(z, z->right);
         }
+        else if(!z->right) {
+            x = z->left;
+            x_parent = z->parent;
+            replace(z, z->left);
+        }
+        else { //tem 2 filhos
+            y = maxValor(z->left); //máximo à esquerda
+            true_color = y->color;
+            x = y->left;
 
+            if(y->parent == z) { //é filho direto
+                x_parent = y;
+                if(x) x->parent = y;
+            }
+            else {
+                x_parent = y->parent;
+                replace(y, y->left);
+                y->left = z->left;
+                if(y->left) y->left->parent = y;
+            }
+            replace(z, y);
+            y->right = z->right;
+            if(y->right) y->right->parent = y;
+            y->color = z->color;
+        }
+
+        delete z;
+
+        if(true_color == black) removeFixUp(x, x_parent);
         
     }
 
@@ -240,23 +268,92 @@ private:
             root->color = black;
     }
 
-    Node* maxValor(Node* no)
+    Node *maxValor(Node *no)
 	{
 		Node* atual = no;
-		while(atual->right != NULL)
+		while(atual->right != nullptr)
 			atual = atual->right;
 		return atual;
 	}
 
-    void replace(Node* a, Node* b) {
+    void replace(Node *a, Node *b) {
         if(!a->parent) root = b;
-        else if(b == a->parent->left) a->parent->left = b;
+        else if(a == a->parent->left) a->parent->left = b;
         else a->parent->right = b;
         if(b) b->parent = a->parent;
     }
 
-    Node* removeFixUp(Node* x) {
+    void removeFixUp(Node *x, Node *x_parent) {
+        while((x != root) && (!x || x->color == black)) {
 
+            if(x_parent && x == x_parent->left) { //x é filho da esquerda
+                Node *w = x_parent->right;
+
+                //case 1: x's sibling is red
+                if(w && w->color == red) {
+                    w->color = black;
+                    x_parent->color = red;
+                    rLeft(x_parent);
+                    w = x_parent->right;
+                }
+                if(!w || ((!w->left || w->left->color == black) && (!w->right || w->right->color == black)) ) { //os dois filhos de w são pretos
+                    //case 2: w and both w's child are black
+                    if(w) w->color = red;
+                    x = x_parent; //atualiza para continuar os testes
+                    x_parent = x? x->parent: nullptr;
+                }
+                else {
+                    //case 3: w's left child is red
+                    if(w->left && w->left->color == red) {
+                        w->color = red;
+                        w->left->color = black; //troca as cores
+                        rRight(w); //single rotation right
+                        w = x_parent->right;
+                    }
+                    //case 4: w's right child is red
+                    if(w) w->color = x_parent->color;
+                    if(x_parent) x_parent->color = black; //pai de x e filho da direita de w ficam pretos
+                    if(w->right) w->right->color = black;
+                    rLeft(x_parent);
+                    x = root;
+                    x_parent = nullptr;
+                }
+            }
+            else { //x é filho da direita
+                Node *w = x_parent->left;
+
+                //case 1: x's sibling is red
+                if(w && w->color == red) {
+                    w->color = black;
+                    x_parent->color = red;
+                    rRight(x_parent);
+                    w = x_parent->left;
+                }
+                if(!w || ((!w->left || w->left->color == black) && (!w->right || w->right->color == black)) ) { //os dois filhos de w são pretos
+                    //case 2: w and both w's child are black
+                    if(w) w->color = red;
+                    x = x_parent; //atualiza para continuar os testes
+                    x_parent = x? x->parent: nullptr;
+                }
+                else {
+                    //case 3: w's left child is red
+                    if(w->left && w->left->color == red) {
+                        w->color = red;
+                        w->left->color = black; //troca as cores
+                        rRight(w); //single rotation left
+                        w = x_parent->left;
+                    }
+                    //case 4: w's right child is red
+                    if(w) w->color = x_parent->color;
+                    if(x_parent) x_parent->color = black; //pai de x e filho da direita de w ficam pretos
+                    if(w->right) w->right->color = black;
+                    rLeft(x_parent);
+                    x = root;
+                    x_parent = nullptr;
+                }
+            }
+        }
+        if(x) x->color = black;
     }
 };
 
