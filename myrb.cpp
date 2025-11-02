@@ -1,3 +1,11 @@
+// Gabriel Costa de Moraes
+//Matheus Seghatti
+
+// executar
+// make
+// ./myrb < palavras1.txt
+
+
 #include <iostream>
 #include <string>
 #include <fstream>
