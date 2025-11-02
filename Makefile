@@ -1,4 +1,4 @@
 
-main: rbtree.cpp
-	g++ rbtree.cpp -o myrb
+main: myrb.cpp
+	g++ myrb.cpp -o myrb
 	
